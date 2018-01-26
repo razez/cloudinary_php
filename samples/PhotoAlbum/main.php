@@ -37,7 +37,9 @@ namespace PhotoAlbum {
         } else {
           $display_value = json_encode($value);
         }
-        echo "<tr><td>" . $key . ":</td><td>" . $display_value . "</td></tr>";
+        /* Long transformation strings were messing the gallery view, pushing the other thumbnails too much to the right.
+           Therefore I've added chunk_split to force a new line every 20 chars.*/
+        echo "<tr><td>" . $key . ":</td><td>" . chunk_split($display_value, 20) . "</td></tr>";
       }
     }
     echo "</table>";
