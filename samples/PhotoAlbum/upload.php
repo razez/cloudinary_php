@@ -72,15 +72,19 @@ require 'main.php';
           try {
               $api->upload_preset($upload_preset);
           } catch (\Cloudinary\Api\NotFound $e) {
-              $api->create_upload_preset(array("name"=>$upload_preset, "unsigned"=>TRUE, "folder"=>"preset_folder"));
+              $api->create_upload_preset(array("name"=>$upload_preset, "unsigned"=>TRUE, "folder"=>"preset_folder",
+                  "height"=>$direct_upload_options['height'], "width"=>$direct_upload_options['width'], "crop"=>$direct_upload_options['crop']));
           }
           # The callback URL is set to point to an HTML file on the local server which works-around restrictions 
           # in older browsers (e.g., IE) which don't full support CORS.
-          echo cl_unsigned_image_upload_tag('test', $upload_preset, array("tags" => "direct_photo_album", "callback" => $cors_location, "html" => array("multiple" => true)));          
+          echo cl_unsigned_image_upload_tag('test', $upload_preset, array(
+                  "tags" => $direct_upload_options['tags'], "callback" => $cors_location, "html" => array(
+                          "multiple" => true
+              )));
         } else {
           # The callback URL is set to point to an HTML file on the local server which works-around restrictions 
           # in older browsers (e.g., IE) which don't full support CORS.
-          echo cl_image_upload_tag('test', array("tags" => "direct_photo_album", "callback" => $cors_location, "html" => array("multiple" => true)));
+          echo cl_image_upload_tag('test', array($direct_upload_options));
         }
       ?>
       <a href="?unsigned=<?php echo !$unsigned; ?>"><?php echo $unsigned ? "Use signed upload" : "Use unsigned upload"; ?></a>

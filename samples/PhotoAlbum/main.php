@@ -20,6 +20,38 @@ namespace PhotoAlbum {
   $thumbs_params = array("format" => "jpg", "height" => 150, "width" => 150,
     "class" => "thumbnail inline");
 
+  /**
+   * Global options to send on upload (in both backend and direct uploads), according to the assignment specifications:
+   *   1. Add a tag. In this case, just appending a random digit between 1-9 to the "tag" prefix.
+   *   2. Automatically re-size images bigger than 500x500 pixels in dimensions, while retaining original aspect ratio.
+   *
+   *   Additional notes: For unsinged direct uploads, options like height, width and crop are prohibited.
+   *                     Therefore I had to add them to the preset created on first unsinged upload.
+   *                     By default the create_upload_preset function in \Cloudinary\Api class allow only the following
+   *                     options to be added: "name", "unsigned", "disallow_public_id". I had to modify it to also
+   *                     include height, width and crop. Though, instead of changing a core function behavior,
+   *                     this might also be achieved by changing the code of the jQuery direct upload plug-in. I assumed
+   *                     it was out of the scope of this assignment.
+   *                     Additionally, it's possible to create/edit the preset used in the code, using the Console
+   *                     Management web interface, and include the transformations.
+   */
+  $backend_upload_options = array(
+      'tags' => "tag".rand(1,9),
+      'height' => 500,
+      'width' => 500,
+      'crop' => "limit"
+  );
+
+  $direct_upload_options = array(
+      'tags' => "tag".rand(1,9),
+      'height' => 500,
+      'width' => 500,
+      'crop' => "limit",
+      'callback' => $cors_location,
+      'html' => array(
+          'multiple' => true
+    ));
+
   // Helper functions
   function ret_var_dump($var) {
     ob_start();

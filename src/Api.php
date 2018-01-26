@@ -212,9 +212,11 @@ class Api {
     return $this->call_api("put", $uri, array_merge($params, $this->only($options, array("unsigned", "disallow_public_id"))), $options);    
   }
   
+  // Added "height", "width", "crop" to the allowed options, when creating a new upload preset from Api
   function create_upload_preset($options=array()) {
-    $params = \Cloudinary\Uploader::build_upload_params($options);
-    return $this->call_api("post", array("upload_presets"), array_merge($params, $this->only($options, array("name", "unsigned", "disallow_public_id"))), $options);    
+      $params = \Cloudinary\Uploader::build_upload_params($options);
+      return $this->call_api("post", array("upload_presets"), array_merge($params, $this->only($options, array(
+          "name", "unsigned", "disallow_public_id", "height", "width", "crop"))), $options);
   }
 
   function root_folders($options=array()) {

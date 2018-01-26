@@ -1,13 +1,15 @@
 <?php
 require 'main.php';
 
-function create_photo( $file_path, $orig_name )
+function create_photo( $file_path, $orig_name, $options )
 {
+    # Remove file type extension from file name, before using it as public_id.
+    # Otherwise uploaded photo url looks like http://res.cloudinary.com/.../xxxxx.jpg.jpg
+    $orig_name = substr($orig_name, 0, strlen($orig_name) - strlen(strrchr($orig_name, '.')));
+    $options['public_id'] = $orig_name; // Add public_id to the global upload_options array
+
     # Upload the received image file to Cloudinary
-    $result = \Cloudinary\Uploader::upload($file_path, array(
-            "tags" => "backend_photo_album",
-            "public_id" => $orig_name,
-    ));
+    $result = \Cloudinary\Uploader::upload($file_path, $options);
 
     unlink($file_path);
     error_log("Upload result: " . \PhotoAlbum\ret_var_dump($result));
@@ -19,7 +21,7 @@ $files = $_FILES["files"];
 $files = is_array($files) ? $files : array( $files );
 $files_data = array();
 foreach ($files["tmp_name"] as $index => $value) {
-    array_push($files_data, create_photo($value, $files["name"][$index]));
+    array_push($files_data, create_photo($value, $files["name"][$index], $backend_upload_options));
 }
 
 ?>
