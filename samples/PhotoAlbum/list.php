@@ -92,8 +92,22 @@
           <div class="more_info">
             <a href="#" class="toggle_info">Hide transformations...</a>
             <table class="thumbnails">
-              <?php 
+              <?php
+                /**
+                 * Added two additional transformations to the already existitng ones:
+                 *
+                 * 1. The most left thumbnail includes Cloudinary watermark as an overlay appended to the bottom right
+                 * side of the photo.
+                 * 2. The thumbnail next to the right is a 50% increased saturation version of the original photo
+                 *    uploaded.
+                 */
                 $thumbs = array(
+                  array("override" => true, "transformation" => array(
+                      array("crop" => "thumb", "height" => 150, "width" => 150), array(
+                              "overlay" => "fetch:https://res.cloudinary.com/demo/image/upload/cloudinary_icon.png",
+                                   "gravity" => "south_east", "width" => "55", "crop" => "limit"
+                      ))),
+                  array("crop" => "thumb", "effect" => "saturation:50"),
                   array("crop" => "fill", "radius" => 10),
                   array("crop" => "scale"),
                   array("crop" => "fit", "format" => "png"),
