@@ -29,16 +29,19 @@ require 'main.php';
       <?php echo fetch_image_tag("http://cloudinary.com/images/logo.png") ?>
     </div>
     
-    <div id="posterframe">
+    <div id="posterframe-upload">
       <!-- This will render the fetched Facebook profile picture using Cloudinary according to the
-           requested transformations -->
-      <?php echo facebook_profile_image_tag("officialchucknorrispage", array(
+           requested transformations.
+           I took the freedom to remove the thumbnail of the almighty Chuck Norris and replace it
+           with s tweaked version of my facebook profile pic :) -->
+      <?php echo facebook_profile_image_tag("1062577706", array(
         "format" => "png",
         "transformation" => array(
-          array("height" => 95, "width" => 95, "crop" => "thumb", "gravity" => "face",
-            "effect" => "sepia", "radius" => 20
-          ), array("angle" => 10)
-        ))); 
+          array("height" => 150, "width" => 150, "crop" => "thumb", "gravity" => "face",
+              "effect" => "cartoonify", "radius" => "50"), array(
+                "overlay" => "text:Risque_16_stroke_justify:Raz%20Z", "x" => "5", "y" => "-35", "color" => "blue",
+                "border" => "2px_solid_white", "angle" => "15"
+            ))));
       ?>
     </div>
 
