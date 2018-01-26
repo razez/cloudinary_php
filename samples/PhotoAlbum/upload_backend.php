@@ -35,10 +35,13 @@ foreach ($files["tmp_name"] as $index => $value) {
 <?php
 foreach ($files_data as $file_data) {
     \PhotoAlbum\array_to_table($file_data);
+
+    /* Inserted the printing of the photo uploaded into the foreach loop.
+       Beforehand, when uploaded several photos at once, only the last uploaded photo was printed to the screen*/
+    echo cl_image_tag($file_data['public_id'], array_merge($thumbs_params, array( "crop" => "fill" )));
 }
 ?>
 <br/>
-<?php echo cl_image_tag($file_data['public_id'], array_merge($thumbs_params, array( "crop" => "fill" ))); ?>
 
 <a href="list.php" class="back_link">Back to list...</a>
 
