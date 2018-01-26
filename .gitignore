@@ -4,3 +4,6 @@ vendor/
 coverage/
 phpdocs/
 *.bak
+samples/PhotoAlbumCake/settings.php
+.idea/
+LICENSE.txt
