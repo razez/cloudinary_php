@@ -1,5 +1,6 @@
 body { font-family: Helvetica, Arial, sans-serif; color: #333; margin: 10px; width: 960px }
-#posterframe { position: absolute; right: 10px; top: 10px; }
+#posterframe-list { position: absolute; right: 10px; top: -8px; }
+#posterframe-upload { position: absolute; right: 10px; top: 10px; }
 h1 { color: #0e2953; font-size: 18px; }
 h2 { color: #666; font-size: 16px; }
 p { font-size: 14px; line-height: 18px; }
